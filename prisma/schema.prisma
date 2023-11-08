@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  idUser        String        @id @default(uuid())
+  name          String
+  lastname      String
+  nick          String
+  password_hash String
+  email         String        @unique
+  dateCreated   DateTime      @default(now())
+  dateUpdated   DateTime
+  status        String        @default("Active")
+  country       Country?
+  cellPhone     String?
+  appointments  Appointment[]
+  addresses     Address[]
+
+  @@map("users")
+}
+
+model Country {
+  countryId   String @id
+  codeAlpha2  String
+  codePhone   String
+  description String
+  status      String @default("Active")
+  user        User   @relation(fields: [userIdUser], references: [idUser])
+  userIdUser  String @unique
+
+  @@map("countries")
+}
+
+model Appointment {
+  idAppoinment           String   @id @default(uuid())
+  dateStartAppointment   String
+  dataEndAppointment     String
+  hourStartAppointment   String
+  hourEndAppointment     String
+  dateCreatedAppointment DateTime @default(now())
+  dateUpdatedAppointment DateTime @default(now())
+  descriptionAppointment String
+  status                 String   @default("Active")
+  user                   User     @relation(fields: [userIdUser], references: [idUser])
+  userIdUser             String
+
+  @@map("appointments")
+}
+
+model Address {
+  idAddress          String   @id @default(uuid())
+  street             String
+  number             Int
+  complement         String
+  addressType        String
+  postalCode         Int
+  dateCreatedAddress DateTime
+  dateUpdatedAddress DateTime
+  state              String   @default("Active")
+  user               User     @relation(fields: [userIdUser], references: [idUser])
+  userIdUser         String
+
+  @@map("addresses")
+}

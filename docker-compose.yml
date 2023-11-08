@@ -1,0 +1,14 @@
+
+
+
+version: '3'
+
+services:
+  api-appointment:
+    image: bitnami/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=appointment
+      - POSTGRESQL_PASSWORD=appointment
+      - POSTGRESQL_DATABASE=apiappointment
