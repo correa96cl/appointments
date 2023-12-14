@@ -11,19 +11,19 @@ datasource db {
 }
 
 model User {
-  idUser        String        @id @default(uuid())
-  name          String
-  lastname      String
-  nick          String
-  password_hash String
-  email         String        @unique
-  dateCreated   DateTime      @default(now())
-  dateUpdated   DateTime
-  status        String        @default("Active")
-  country       Country?
-  cellPhone     String?
-  appointments  Appointment[]
-  addresses     Address[]
+  idUser       String        @id @default(uuid())
+  name         String
+  lastname     String
+  nick         String
+  password     String
+  email        String        @unique
+  dateCreated  DateTime      @default(now())
+  dateUpdated  DateTime?
+  status       String        @default("Active")
+  country      Country?
+  cellPhone    String?
+  appointments Appointment[]
+  addresses    Address[]
 
   @@map("users")
 }
@@ -70,4 +70,10 @@ model Address {
   userIdUser         String
 
   @@map("addresses")
+}
+
+model Parameter {
+  idParameter               String @id
+  patternParameterValue     String
+  descriptionParameterValue String
 }
